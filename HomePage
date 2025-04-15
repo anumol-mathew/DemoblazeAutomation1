@@ -1,0 +1,22 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class HomePage {
+    private WebDriver driver;
+    private By logoutLink = By.id("logout2");
+
+    public HomePage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public void selectProduct(String productName) {
+        driver.findElement(By.linkText(productName)).click();
+        Utils.sleep(2000);
+    }
+
+    public void logout() {
+        driver.findElement(logoutLink).click();
+    }
+}
