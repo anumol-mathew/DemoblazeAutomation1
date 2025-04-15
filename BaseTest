@@ -1,0 +1,40 @@
+package base;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
+import org.testng.ITestResult;
+import utils.Utils;
+import utils.ExtentManager;
+import com.aventstack.extentreports.*;
+
+public class BaseTest {
+    protected WebDriver driver;
+    protected ExtentReports extent;
+    protected ExtentTest test;
+
+    @BeforeClass
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+        extent = ExtentManager.getInstance();
+    }
+
+    @AfterMethod
+    public void tearDown(ITestResult result) {
+        if (result.getStatus() == ITestResult.FAILURE) {
+            String screenshot = Utils.captureScreenshot(driver, result.getName());
+            test.fail(result.getThrowable()).addScreenCaptureFromPath(screenshot);
+        }
+        extent.flush();
+    }
+
+    @AfterClass
+    public void cleanUp() {
+        driver.quit();
+    }
+}
+
+
+
+
