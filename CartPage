@@ -1,0 +1,29 @@
+package pages;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class CartPage {
+    private WebDriver driver;
+
+    public CartPage(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    public void verifyProductInCart(String productName) {
+        driver.findElement(By.id("cartur")).click();
+        Utils.sleep(2000);
+        assert driver.getPageSource().contains(productName);
+    }
+
+    public void checkout(String name, String country, String city, String card, String month, String year) {
+        driver.findElement(By.xpath("//button[text()='Place Order']")).click();
+        driver.findElement(By.id("name")).sendKeys(name);
+        driver.findElement(By.id("country")).sendKeys(country);
+        driver.findElement(By.id("city")).sendKeys(city);
+        driver.findElement(By.id("card")).sendKeys(card);
+        driver.findElement(By.id("month")).sendKeys(month);
+        driver.findElement(By.id("year")).sendKeys(year);
+        driver.findElement(By.xpath("//button[text()='Purchase']")).click();
+    }
+}
