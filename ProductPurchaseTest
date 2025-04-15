@@ -1,0 +1,26 @@
+package tests;
+
+import base.BaseTest;
+import org.testng.annotations.Test;
+import pages.*;
+
+public class ProductPurchaseTest extends BaseTest {
+
+    @Test
+    public void purchaseProduct() {
+        test = extent.createTest("Purchase Product Test");
+        driver.get("https://www.demoblaze.com/");
+
+        new SignUpPage(driver).signUp("user123", "pass123");
+        new LoginPage(driver).login("user123", "pass123");
+
+        new HomePage(driver).selectProduct("Samsung galaxy s6");
+        new ProductPage(driver).addToCart();
+
+        new CartPage(driver).verifyProductInCart("Samsung galaxy s6");
+        new CartPage(driver).checkout("John", "USA", "New York", "1234567890123456", "12", "2025");
+
+        new CheckoutPage(driver).verifySuccessMessage();
+        new HomePage(driver).logout();
+    }
+}
